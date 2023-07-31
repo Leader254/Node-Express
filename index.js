@@ -86,6 +86,31 @@ app.use((err, req, res, next) => {
     res.status(500).send("Something broke!");
 });
 
+// Add a object in the data array
+app.post('/add',(req,res) =>{
+    const newStudent = {
+        id: data.length + 1,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email
+    }
+    data.push(newStudent);
+    res.send("Added successfully")
+});
+
+// update a certain object in the data array
+app.put('/update/:id',(req,res) =>{
+    const studentId = Number(req.params.id);
+    const studentIndex = data.findIndex(student => student.id === studentId);
+    data[studentIndex].first_name = req.body.first_name;
+    data[studentIndex].last_name = req.body.last_name;
+    data[studentIndex].email = req.body.email;
+    res.send("Updated successfully")
+}
+);
+  
+  
+  
 // / /// /// / /// ROUTES /// /// //// /// // //
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
